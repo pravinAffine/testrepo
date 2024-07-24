@@ -1,0 +1,2192 @@
+CREATE TABLE Customers (
+    CustomerID int PRIMARY KEY,
+    FirstName nvarchar(50),
+    LastName nvarchar(50),
+    Email nvarchar(100),
+    Phone nvarchar(20),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20)
+);
+ 
+CREATE TABLE Orders (
+    OrderID int PRIMARY KEY,
+    CustomerID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Products (
+    ProductID int PRIMARY KEY,
+    ProductName nvarchar(100),
+    SupplierID int,
+    CategoryID int,
+    QuantityPerUnit nvarchar(50),
+    UnitPrice decimal(10, 2),
+    UnitsInStock int,
+    UnitsOnOrder int,
+    ReorderLevel int,
+    Discontinued bit
+);
+ 
+CREATE TABLE Suppliers (
+    SupplierID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    ContactName nvarchar(50),
+    ContactTitle nvarchar(50),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    Phone nvarchar(20),
+    Fax nvarchar(20),
+    HomePage nvarchar(200)
+);
+ 
+CREATE TABLE Categories (
+    CategoryID int PRIMARY KEY,
+    CategoryName nvarchar(50),
+    Description nvarchar(500)
+);
+ 
+CREATE TABLE OrderDetails (
+    OrderDetailID int PRIMARY KEY,
+    OrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    Discount decimal(5, 2),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Employees (
+    EmployeeID int PRIMARY KEY,
+    LastName nvarchar(50),
+    FirstName nvarchar(50),
+    Title nvarchar(50),
+    TitleOfCourtesy nvarchar(50),
+    BirthDate datetime,
+    HireDate datetime,
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20),
+    HomePhone nvarchar(20),
+    Notes nvarchar(1000)
+);
+ 
+CREATE TABLE Shippers (
+    ShipperID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    Phone nvarchar(20)
+);
+ 
+CREATE TABLE CustomerDemographics (
+    CustomerTypeID int PRIMARY KEY,
+    CustomerDesc nvarchar(500)
+);
+ 
+CREATE TABLE Region (
+    RegionID int PRIMARY KEY,
+    RegionDescription nvarchar(50)
+);
+ 
+CREATE TABLE Territories (
+    TerritoryID int PRIMARY KEY,
+    TerritoryDescription nvarchar(50),
+    RegionID int,
+    FOREIGN KEY (RegionID) REFERENCES Region(RegionID)
+);
+ 
+CREATE TABLE EmployeeTerritories (
+    EmployeeID int,
+    TerritoryID int,
+    PRIMARY KEY (EmployeeID, TerritoryID),
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID),
+    FOREIGN KEY (TerritoryID) REFERENCES Territories(TerritoryID)
+);
+ 
+CREATE TABLE Inventory (
+    InventoryID int PRIMARY KEY,
+    ProductID int,
+    Quantity int,
+    Location nvarchar(100),
+    LastUpdated datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE PurchaseOrders (
+    PurchaseOrderID int PRIMARY KEY,
+    SupplierID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
+);
+ 
+CREATE TABLE PurchaseOrderDetails (
+    PurchaseOrderDetailID int PRIMARY KEY,
+    PurchaseOrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    FOREIGN KEY (PurchaseOrderID) REFERENCES PurchaseOrders(PurchaseOrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Reviews (
+    ReviewID int PRIMARY KEY,
+    ProductID int,
+    CustomerID int,
+    Rating int,
+    ReviewText nvarchar(1000),
+    ReviewDate datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Wishlists (
+    WishlistID int PRIMARY KEY,
+    CustomerID int,
+    WishlistName nvarchar(100),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE WishlistItems (
+    WishlistItemID int PRIMARY KEY,
+    WishlistID int,
+    ProductID int,
+    AddedDate datetime,
+    FOREIGN KEY (WishlistID) REFERENCES Wishlists(WishlistID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE ShoppingCart (
+    CartID int PRIMARY KEY,
+    CustomerID int,
+    CreatedDate datetime,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE ShoppingCartItems (
+    CartItemID int PRIMARY KEY,
+    CartID int,
+    ProductID int,
+    Quantity int,
+    AddedDate datetime,
+    FOREIGN KEY (CartID) REFERENCES ShoppingCart(CartID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+[Tuesday 10:32 AM] Pravin Chaubey
+CREATE TABLE Customers (
+    CustomerID int PRIMARY KEY,
+    FirstName nvarchar(50),
+    LastName nvarchar(50),
+    Email nvarchar(100),
+    Phone nvarchar(20),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20)
+);
+ 
+CREATE TABLE Orders (
+    OrderID int PRIMARY KEY,
+    CustomerID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Products (
+    ProductID int PRIMARY KEY,
+    ProductName nvarchar(100),
+    SupplierID int,
+    CategoryID int,
+    QuantityPerUnit nvarchar(50),
+    UnitPrice decimal(10, 2),
+    UnitsInStock int,
+    UnitsOnOrder int,
+    ReorderLevel int,
+    Discontinued bit
+);
+ 
+CREATE TABLE Suppliers (
+    SupplierID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    ContactName nvarchar(50),
+    ContactTitle nvarchar(50),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    Phone nvarchar(20),
+    Fax nvarchar(20),
+    HomePage nvarchar(200)
+);
+ 
+CREATE TABLE Categories (
+    CategoryID int PRIMARY KEY,
+    CategoryName nvarchar(50),
+    Description nvarchar(500)
+);
+ 
+CREATE TABLE OrderDetails (
+    OrderDetailID int PRIMARY KEY,
+    OrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    Discount decimal(5, 2),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Employees (
+    EmployeeID int PRIMARY KEY,
+    LastName nvarchar(50),
+    FirstName nvarchar(50),
+    Title nvarchar(50),
+    TitleOfCourtesy nvarchar(50),
+    BirthDate datetime,
+    HireDate datetime,
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20),
+    HomePhone nvarchar(20),
+    Notes nvarchar(1000)
+);
+ 
+CREATE TABLE Shippers (
+    ShipperID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    Phone nvarchar(20)
+);
+ 
+CREATE TABLE CustomerDemographics (
+    CustomerTypeID int PRIMARY KEY,
+    CustomerDesc nvarchar(500)
+);
+ 
+CREATE TABLE Region (
+    RegionID int PRIMARY KEY,
+    RegionDescription nvarchar(50)
+);
+ 
+CREATE TABLE Territories (
+    TerritoryID int PRIMARY KEY,
+    TerritoryDescription nvarchar(50),
+    RegionID int,
+    FOREIGN KEY (RegionID) REFERENCES Region(RegionID)
+);
+ 
+CREATE TABLE EmployeeTerritories (
+    EmployeeID int,
+    TerritoryID int,
+    PRIMARY KEY (EmployeeID, TerritoryID),
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID),
+    FOREIGN KEY (TerritoryID) REFERENCES Territories(TerritoryID)
+);
+ 
+CREATE TABLE Inventory (
+    InventoryID int PRIMARY KEY,
+    ProductID int,
+    Quantity int,
+    Location nvarchar(100),
+    LastUpdated datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE PurchaseOrders (
+    PurchaseOrderID int PRIMARY KEY,
+    SupplierID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
+);
+ 
+CREATE TABLE PurchaseOrderDetails (
+    PurchaseOrderDetailID int PRIMARY KEY,
+    PurchaseOrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    FOREIGN KEY (PurchaseOrderID) REFERENCES PurchaseOrders(PurchaseOrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Reviews (
+    ReviewID int PRIMARY KEY,
+    ProductID int,
+    CustomerID int,
+    Rating int,
+    ReviewText nvarchar(1000),
+    ReviewDate datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Wishlists (
+    WishlistID int PRIMARY KEY,
+    CustomerID int,
+    WishlistName nvarchar(100),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE WishlistItems (
+    WishlistItemID int PRIMARY KEY,
+    WishlistID int,
+    ProductID int,
+    AddedDate datetime,
+    FOREIGN KEY (WishlistID) REFERENCES Wishlists(WishlistID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE ShoppingCart (
+    CartID int PRIMARY KEY,
+    CustomerID int,
+    CreatedDate datetime,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE ShoppingCartItems (
+    CartItemID int PRIMARY KEY,
+    CartID int,
+    ProductID int,
+    Quantity int,
+    AddedDate datetime,
+    FOREIGN KEY (CartID) REFERENCES ShoppingCart(CartID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+[Tuesday 10:32 AM] Pravin Chaubey
+CREATE TABLE Customers (
+    CustomerID int PRIMARY KEY,
+    FirstName nvarchar(50),
+    LastName nvarchar(50),
+    Email nvarchar(100),
+    Phone nvarchar(20),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20)
+);
+ 
+CREATE TABLE Orders (
+    OrderID int PRIMARY KEY,
+    CustomerID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Products (
+    ProductID int PRIMARY KEY,
+    ProductName nvarchar(100),
+    SupplierID int,
+    CategoryID int,
+    QuantityPerUnit nvarchar(50),
+    UnitPrice decimal(10, 2),
+    UnitsInStock int,
+    UnitsOnOrder int,
+    ReorderLevel int,
+    Discontinued bit
+);
+ 
+CREATE TABLE Suppliers (
+    SupplierID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    ContactName nvarchar(50),
+    ContactTitle nvarchar(50),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    Phone nvarchar(20),
+    Fax nvarchar(20),
+    HomePage nvarchar(200)
+);
+ 
+CREATE TABLE Categories (
+    CategoryID int PRIMARY KEY,
+    CategoryName nvarchar(50),
+    Description nvarchar(500)
+);
+ 
+CREATE TABLE OrderDetails (
+    OrderDetailID int PRIMARY KEY,
+    OrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    Discount decimal(5, 2),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Employees (
+    EmployeeID int PRIMARY KEY,
+    LastName nvarchar(50),
+    FirstName nvarchar(50),
+    Title nvarchar(50),
+    TitleOfCourtesy nvarchar(50),
+    BirthDate datetime,
+    HireDate datetime,
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20),
+    HomePhone nvarchar(20),
+    Notes nvarchar(1000)
+);
+ 
+CREATE TABLE Shippers (
+    ShipperID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    Phone nvarchar(20)
+);
+ 
+CREATE TABLE CustomerDemographics (
+    CustomerTypeID int PRIMARY KEY,
+    CustomerDesc nvarchar(500)
+);
+ 
+CREATE TABLE Region (
+    RegionID int PRIMARY KEY,
+    RegionDescription nvarchar(50)
+);
+ 
+CREATE TABLE Territories (
+    TerritoryID int PRIMARY KEY,
+    TerritoryDescription nvarchar(50),
+    RegionID int,
+    FOREIGN KEY (RegionID) REFERENCES Region(RegionID)
+);
+ 
+CREATE TABLE EmployeeTerritories (
+    EmployeeID int,
+    TerritoryID int,
+    PRIMARY KEY (EmployeeID, TerritoryID),
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID),
+    FOREIGN KEY (TerritoryID) REFERENCES Territories(TerritoryID)
+);
+ 
+CREATE TABLE Inventory (
+    InventoryID int PRIMARY KEY,
+    ProductID int,
+    Quantity int,
+    Location nvarchar(100),
+    LastUpdated datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE PurchaseOrders (
+    PurchaseOrderID int PRIMARY KEY,
+    SupplierID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
+);
+ 
+CREATE TABLE PurchaseOrderDetails (
+    PurchaseOrderDetailID int PRIMARY KEY,
+    PurchaseOrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    FOREIGN KEY (PurchaseOrderID) REFERENCES PurchaseOrders(PurchaseOrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Reviews (
+    ReviewID int PRIMARY KEY,
+    ProductID int,
+    CustomerID int,
+    Rating int,
+    ReviewText nvarchar(1000),
+    ReviewDate datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Wishlists (
+    WishlistID int PRIMARY KEY,
+    CustomerID int,
+    WishlistName nvarchar(100),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE WishlistItems (
+    WishlistItemID int PRIMARY KEY,
+    WishlistID int,
+    ProductID int,
+    AddedDate datetime,
+    FOREIGN KEY (WishlistID) REFERENCES Wishlists(WishlistID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE ShoppingCart (
+    CartID int PRIMARY KEY,
+    CustomerID int,
+    CreatedDate datetime,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE ShoppingCartItems (
+    CartItemID int PRIMARY KEY,
+    CartID int,
+    ProductID int,
+    Quantity int,
+    AddedDate datetime,
+    FOREIGN KEY (CartID) REFERENCES ShoppingCart(CartID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+CREATE TABLE Customers (
+    CustomerID int PRIMARY KEY,
+    FirstName nvarchar(50),
+    LastName nvarchar(50),
+    Email nvarchar(100),
+    Phone nvarchar(20),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20)
+);
+ 
+CREATE TABLE Orders (
+    OrderID int PRIMARY KEY,
+    CustomerID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Products (
+    ProductID int PRIMARY KEY,
+    ProductName nvarchar(100),
+    SupplierID int,
+    CategoryID int,
+    QuantityPerUnit nvarchar(50),
+    UnitPrice decimal(10, 2),
+    UnitsInStock int,
+    UnitsOnOrder int,
+    ReorderLevel int,
+    Discontinued bit
+);
+ 
+CREATE TABLE Suppliers (
+    SupplierID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    ContactName nvarchar(50),
+    ContactTitle nvarchar(50),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    Phone nvarchar(20),
+    Fax nvarchar(20),
+    HomePage nvarchar(200)
+);
+ 
+CREATE TABLE Categories (
+    CategoryID int PRIMARY KEY,
+    CategoryName nvarchar(50),
+    Description nvarchar(500)
+);
+ 
+CREATE TABLE OrderDetails (
+    OrderDetailID int PRIMARY KEY,
+    OrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    Discount decimal(5, 2),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Employees (
+    EmployeeID int PRIMARY KEY,
+    LastName nvarchar(50),
+    FirstName nvarchar(50),
+    Title nvarchar(50),
+    TitleOfCourtesy nvarchar(50),
+    BirthDate datetime,
+    HireDate datetime,
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20),
+    HomePhone nvarchar(20),
+    Notes nvarchar(1000)
+);
+ 
+CREATE TABLE Shippers (
+    ShipperID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    Phone nvarchar(20)
+);
+ 
+CREATE TABLE CustomerDemographics (
+    CustomerTypeID int PRIMARY KEY,
+    CustomerDesc nvarchar(500)
+);
+ 
+CREATE TABLE Region (
+    RegionID int PRIMARY KEY,
+    RegionDescription nvarchar(50)
+);
+ 
+CREATE TABLE Territories (
+    TerritoryID int PRIMARY KEY,
+    TerritoryDescription nvarchar(50),
+    RegionID int,
+    FOREIGN KEY (RegionID) REFERENCES Region(RegionID)
+);
+ 
+CREATE TABLE EmployeeTerritories (
+    EmployeeID int,
+    TerritoryID int,
+    PRIMARY KEY (EmployeeID, TerritoryID),
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID),
+    FOREIGN KEY (TerritoryID) REFERENCES Territories(TerritoryID)
+);
+ 
+CREATE TABLE Inventory (
+    InventoryID int PRIMARY KEY,
+    ProductID int,
+    Quantity int,
+    Location nvarchar(100),
+    LastUpdated datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE PurchaseOrders (
+    PurchaseOrderID int PRIMARY KEY,
+    SupplierID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
+);
+ 
+CREATE TABLE PurchaseOrderDetails (
+    PurchaseOrderDetailID int PRIMARY KEY,
+    PurchaseOrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    FOREIGN KEY (PurchaseOrderID) REFERENCES PurchaseOrders(PurchaseOrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Reviews (
+    ReviewID int PRIMARY KEY,
+    ProductID int,
+    CustomerID int,
+    Rating int,
+    ReviewText nvarchar(1000),
+    ReviewDate datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Wishlists (
+    WishlistID int PRIMARY KEY,
+    CustomerID int,
+    WishlistName nvarchar(100),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE WishlistItems (
+    WishlistItemID int PRIMARY KEY,
+    WishlistID int,
+    ProductID int,
+    AddedDate datetime,
+    FOREIGN KEY (WishlistID) REFERENCES Wishlists(WishlistID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE ShoppingCart (
+    CartID int PRIMARY KEY,
+    CustomerID int,
+    CreatedDate datetime,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE ShoppingCartItems (
+    CartItemID int PRIMARY KEY,
+    CartID int,
+    ProductID int,
+    Quantity int,
+    AddedDate datetime,
+    FOREIGN KEY (CartID) REFERENCES ShoppingCart(CartID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+[Tuesday 10:32 AM] Pravin Chaubey
+CREATE TABLE Customers (
+    CustomerID int PRIMARY KEY,
+    FirstName nvarchar(50),
+    LastName nvarchar(50),
+    Email nvarchar(100),
+    Phone nvarchar(20),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20)
+);
+ 
+CREATE TABLE Orders (
+    OrderID int PRIMARY KEY,
+    CustomerID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Products (
+    ProductID int PRIMARY KEY,
+    ProductName nvarchar(100),
+    SupplierID int,
+    CategoryID int,
+    QuantityPerUnit nvarchar(50),
+    UnitPrice decimal(10, 2),
+    UnitsInStock int,
+    UnitsOnOrder int,
+    ReorderLevel int,
+    Discontinued bit
+);
+ 
+CREATE TABLE Suppliers (
+    SupplierID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    ContactName nvarchar(50),
+    ContactTitle nvarchar(50),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    Phone nvarchar(20),
+    Fax nvarchar(20),
+    HomePage nvarchar(200)
+);
+ 
+CREATE TABLE Categories (
+    CategoryID int PRIMARY KEY,
+    CategoryName nvarchar(50),
+    Description nvarchar(500)
+);
+ 
+CREATE TABLE OrderDetails (
+    OrderDetailID int PRIMARY KEY,
+    OrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    Discount decimal(5, 2),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Employees (
+    EmployeeID int PRIMARY KEY,
+    LastName nvarchar(50),
+    FirstName nvarchar(50),
+    Title nvarchar(50),
+    TitleOfCourtesy nvarchar(50),
+    BirthDate datetime,
+    HireDate datetime,
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20),
+    HomePhone nvarchar(20),
+    Notes nvarchar(1000)
+);
+ 
+CREATE TABLE Shippers (
+    ShipperID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    Phone nvarchar(20)
+);
+ 
+CREATE TABLE CustomerDemographics (
+    CustomerTypeID int PRIMARY KEY,
+    CustomerDesc nvarchar(500)
+);
+ 
+CREATE TABLE Region (
+    RegionID int PRIMARY KEY,
+    RegionDescription nvarchar(50)
+);
+ 
+CREATE TABLE Territories (
+    TerritoryID int PRIMARY KEY,
+    TerritoryDescription nvarchar(50),
+    RegionID int,
+    FOREIGN KEY (RegionID) REFERENCES Region(RegionID)
+);
+ 
+CREATE TABLE EmployeeTerritories (
+    EmployeeID int,
+    TerritoryID int,
+    PRIMARY KEY (EmployeeID, TerritoryID),
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID),
+    FOREIGN KEY (TerritoryID) REFERENCES Territories(TerritoryID)
+);
+ 
+CREATE TABLE Inventory (
+    InventoryID int PRIMARY KEY,
+    ProductID int,
+    Quantity int,
+    Location nvarchar(100),
+    LastUpdated datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE PurchaseOrders (
+    PurchaseOrderID int PRIMARY KEY,
+    SupplierID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
+);
+ 
+CREATE TABLE PurchaseOrderDetails (
+    PurchaseOrderDetailID int PRIMARY KEY,
+    PurchaseOrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    FOREIGN KEY (PurchaseOrderID) REFERENCES PurchaseOrders(PurchaseOrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Reviews (
+    ReviewID int PRIMARY KEY,
+    ProductID int,
+    CustomerID int,
+    Rating int,
+    ReviewText nvarchar(1000),
+    ReviewDate datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Wishlists (
+    WishlistID int PRIMARY KEY,
+    CustomerID int,
+    WishlistName nvarchar(100),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE WishlistItems (
+    WishlistItemID int PRIMARY KEY,
+    WishlistID int,
+    ProductID int,
+    AddedDate datetime,
+    FOREIGN KEY (WishlistID) REFERENCES Wishlists(WishlistID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE ShoppingCart (
+    CartID int PRIMARY KEY,
+    CustomerID int,
+    CreatedDate datetime,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE ShoppingCartItems (
+    CartItemID int PRIMARY KEY,
+    CartID int,
+    ProductID int,
+    Quantity int,
+    AddedDate datetime,
+    FOREIGN KEY (CartID) REFERENCES ShoppingCart(CartID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+[Tuesday 10:32 AM] Pravin Chaubey
+CREATE TABLE Customers (
+    CustomerID int PRIMARY KEY,
+    FirstName nvarchar(50),
+    LastName nvarchar(50),
+    Email nvarchar(100),
+    Phone nvarchar(20),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20)
+);
+ 
+CREATE TABLE Orders (
+    OrderID int PRIMARY KEY,
+    CustomerID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Products (
+    ProductID int PRIMARY KEY,
+    ProductName nvarchar(100),
+    SupplierID int,
+    CategoryID int,
+    QuantityPerUnit nvarchar(50),
+    UnitPrice decimal(10, 2),
+    UnitsInStock int,
+    UnitsOnOrder int,
+    ReorderLevel int,
+    Discontinued bit
+);
+ 
+CREATE TABLE Suppliers (
+    SupplierID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    ContactName nvarchar(50),
+    ContactTitle nvarchar(50),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    Phone nvarchar(20),
+    Fax nvarchar(20),
+    HomePage nvarchar(200)
+);
+ 
+CREATE TABLE Categories (
+    CategoryID int PRIMARY KEY,
+    CategoryName nvarchar(50),
+    Description nvarchar(500)
+);
+ 
+CREATE TABLE OrderDetails (
+    OrderDetailID int PRIMARY KEY,
+    OrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    Discount decimal(5, 2),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Employees (
+    EmployeeID int PRIMARY KEY,
+    LastName nvarchar(50),
+    FirstName nvarchar(50),
+    Title nvarchar(50),
+    TitleOfCourtesy nvarchar(50),
+    BirthDate datetime,
+    HireDate datetime,
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20),
+    HomePhone nvarchar(20),
+    Notes nvarchar(1000)
+);
+ 
+CREATE TABLE Shippers (
+    ShipperID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    Phone nvarchar(20)
+);
+ 
+CREATE TABLE CustomerDemographics (
+    CustomerTypeID int PRIMARY KEY,
+    CustomerDesc nvarchar(500)
+);
+ 
+CREATE TABLE Region (
+    RegionID int PRIMARY KEY,
+    RegionDescription nvarchar(50)
+);
+ 
+CREATE TABLE Territories (
+    TerritoryID int PRIMARY KEY,
+    TerritoryDescription nvarchar(50),
+    RegionID int,
+    FOREIGN KEY (RegionID) REFERENCES Region(RegionID)
+);
+ 
+CREATE TABLE EmployeeTerritories (
+    EmployeeID int,
+    TerritoryID int,
+    PRIMARY KEY (EmployeeID, TerritoryID),
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID),
+    FOREIGN KEY (TerritoryID) REFERENCES Territories(TerritoryID)
+);
+ 
+CREATE TABLE Inventory (
+    InventoryID int PRIMARY KEY,
+    ProductID int,
+    Quantity int,
+    Location nvarchar(100),
+    LastUpdated datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE PurchaseOrders (
+    PurchaseOrderID int PRIMARY KEY,
+    SupplierID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
+);
+ 
+CREATE TABLE PurchaseOrderDetails (
+    PurchaseOrderDetailID int PRIMARY KEY,
+    PurchaseOrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    FOREIGN KEY (PurchaseOrderID) REFERENCES PurchaseOrders(PurchaseOrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Reviews (
+    ReviewID int PRIMARY KEY,
+    ProductID int,
+    CustomerID int,
+    Rating int,
+    ReviewText nvarchar(1000),
+    ReviewDate datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Wishlists (
+    WishlistID int PRIMARY KEY,
+    CustomerID int,
+    WishlistName nvarchar(100),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE WishlistItems (
+    WishlistItemID int PRIMARY KEY,
+    WishlistID int,
+    ProductID int,
+    AddedDate datetime,
+    FOREIGN KEY (WishlistID) REFERENCES Wishlists(WishlistID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE ShoppingCart (
+    CartID int PRIMARY KEY,
+    CustomerID int,
+    CreatedDate datetime,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE ShoppingCartItems (
+    CartItemID int PRIMARY KEY,
+    CartID int,
+    ProductID int,
+    Quantity int,
+    AddedDate datetime,
+    FOREIGN KEY (CartID) REFERENCES ShoppingCart(CartID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+CREATE TABLE Customers (
+    CustomerID int PRIMARY KEY,
+    FirstName nvarchar(50),
+    LastName nvarchar(50),
+    Email nvarchar(100),
+    Phone nvarchar(20),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20)
+);
+ 
+CREATE TABLE Orders (
+    OrderID int PRIMARY KEY,
+    CustomerID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Products (
+    ProductID int PRIMARY KEY,
+    ProductName nvarchar(100),
+    SupplierID int,
+    CategoryID int,
+    QuantityPerUnit nvarchar(50),
+    UnitPrice decimal(10, 2),
+    UnitsInStock int,
+    UnitsOnOrder int,
+    ReorderLevel int,
+    Discontinued bit
+);
+ 
+CREATE TABLE Suppliers (
+    SupplierID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    ContactName nvarchar(50),
+    ContactTitle nvarchar(50),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    Phone nvarchar(20),
+    Fax nvarchar(20),
+    HomePage nvarchar(200)
+);
+ 
+CREATE TABLE Categories (
+    CategoryID int PRIMARY KEY,
+    CategoryName nvarchar(50),
+    Description nvarchar(500)
+);
+ 
+CREATE TABLE OrderDetails (
+    OrderDetailID int PRIMARY KEY,
+    OrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    Discount decimal(5, 2),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Employees (
+    EmployeeID int PRIMARY KEY,
+    LastName nvarchar(50),
+    FirstName nvarchar(50),
+    Title nvarchar(50),
+    TitleOfCourtesy nvarchar(50),
+    BirthDate datetime,
+    HireDate datetime,
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20),
+    HomePhone nvarchar(20),
+    Notes nvarchar(1000)
+);
+ 
+CREATE TABLE Shippers (
+    ShipperID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    Phone nvarchar(20)
+);
+ 
+CREATE TABLE CustomerDemographics (
+    CustomerTypeID int PRIMARY KEY,
+    CustomerDesc nvarchar(500)
+);
+ 
+CREATE TABLE Region (
+    RegionID int PRIMARY KEY,
+    RegionDescription nvarchar(50)
+);
+ 
+CREATE TABLE Territories (
+    TerritoryID int PRIMARY KEY,
+    TerritoryDescription nvarchar(50),
+    RegionID int,
+    FOREIGN KEY (RegionID) REFERENCES Region(RegionID)
+);
+ 
+CREATE TABLE EmployeeTerritories (
+    EmployeeID int,
+    TerritoryID int,
+    PRIMARY KEY (EmployeeID, TerritoryID),
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID),
+    FOREIGN KEY (TerritoryID) REFERENCES Territories(TerritoryID)
+);
+ 
+CREATE TABLE Inventory (
+    InventoryID int PRIMARY KEY,
+    ProductID int,
+    Quantity int,
+    Location nvarchar(100),
+    LastUpdated datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE PurchaseOrders (
+    PurchaseOrderID int PRIMARY KEY,
+    SupplierID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
+);
+ 
+CREATE TABLE PurchaseOrderDetails (
+    PurchaseOrderDetailID int PRIMARY KEY,
+    PurchaseOrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    FOREIGN KEY (PurchaseOrderID) REFERENCES PurchaseOrders(PurchaseOrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Reviews (
+    ReviewID int PRIMARY KEY,
+    ProductID int,
+    CustomerID int,
+    Rating int,
+    ReviewText nvarchar(1000),
+    ReviewDate datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Wishlists (
+    WishlistID int PRIMARY KEY,
+    CustomerID int,
+    WishlistName nvarchar(100),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE WishlistItems (
+    WishlistItemID int PRIMARY KEY,
+    WishlistID int,
+    ProductID int,
+    AddedDate datetime,
+    FOREIGN KEY (WishlistID) REFERENCES Wishlists(WishlistID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE ShoppingCart (
+    CartID int PRIMARY KEY,
+    CustomerID int,
+    CreatedDate datetime,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE ShoppingCartItems (
+    CartItemID int PRIMARY KEY,
+    CartID int,
+    ProductID int,
+    Quantity int,
+    AddedDate datetime,
+    FOREIGN KEY (CartID) REFERENCES ShoppingCart(CartID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+[Tuesday 10:32 AM] Pravin Chaubey
+CREATE TABLE Customers (
+    CustomerID int PRIMARY KEY,
+    FirstName nvarchar(50),
+    LastName nvarchar(50),
+    Email nvarchar(100),
+    Phone nvarchar(20),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20)
+);
+ 
+CREATE TABLE Orders (
+    OrderID int PRIMARY KEY,
+    CustomerID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Products (
+    ProductID int PRIMARY KEY,
+    ProductName nvarchar(100),
+    SupplierID int,
+    CategoryID int,
+    QuantityPerUnit nvarchar(50),
+    UnitPrice decimal(10, 2),
+    UnitsInStock int,
+    UnitsOnOrder int,
+    ReorderLevel int,
+    Discontinued bit
+);
+ 
+CREATE TABLE Suppliers (
+    SupplierID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    ContactName nvarchar(50),
+    ContactTitle nvarchar(50),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    Phone nvarchar(20),
+    Fax nvarchar(20),
+    HomePage nvarchar(200)
+);
+ 
+CREATE TABLE Categories (
+    CategoryID int PRIMARY KEY,
+    CategoryName nvarchar(50),
+    Description nvarchar(500)
+);
+ 
+CREATE TABLE OrderDetails (
+    OrderDetailID int PRIMARY KEY,
+    OrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    Discount decimal(5, 2),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Employees (
+    EmployeeID int PRIMARY KEY,
+    LastName nvarchar(50),
+    FirstName nvarchar(50),
+    Title nvarchar(50),
+    TitleOfCourtesy nvarchar(50),
+    BirthDate datetime,
+    HireDate datetime,
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20),
+    HomePhone nvarchar(20),
+    Notes nvarchar(1000)
+);
+ 
+CREATE TABLE Shippers (
+    ShipperID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    Phone nvarchar(20)
+);
+ 
+CREATE TABLE CustomerDemographics (
+    CustomerTypeID int PRIMARY KEY,
+    CustomerDesc nvarchar(500)
+);
+ 
+CREATE TABLE Region (
+    RegionID int PRIMARY KEY,
+    RegionDescription nvarchar(50)
+);
+ 
+CREATE TABLE Territories (
+    TerritoryID int PRIMARY KEY,
+    TerritoryDescription nvarchar(50),
+    RegionID int,
+    FOREIGN KEY (RegionID) REFERENCES Region(RegionID)
+);
+ 
+CREATE TABLE EmployeeTerritories (
+    EmployeeID int,
+    TerritoryID int,
+    PRIMARY KEY (EmployeeID, TerritoryID),
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID),
+    FOREIGN KEY (TerritoryID) REFERENCES Territories(TerritoryID)
+);
+ 
+CREATE TABLE Inventory (
+    InventoryID int PRIMARY KEY,
+    ProductID int,
+    Quantity int,
+    Location nvarchar(100),
+    LastUpdated datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE PurchaseOrders (
+    PurchaseOrderID int PRIMARY KEY,
+    SupplierID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
+);
+ 
+CREATE TABLE PurchaseOrderDetails (
+    PurchaseOrderDetailID int PRIMARY KEY,
+    PurchaseOrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    FOREIGN KEY (PurchaseOrderID) REFERENCES PurchaseOrders(PurchaseOrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Reviews (
+    ReviewID int PRIMARY KEY,
+    ProductID int,
+    CustomerID int,
+    Rating int,
+    ReviewText nvarchar(1000),
+    ReviewDate datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Wishlists (
+    WishlistID int PRIMARY KEY,
+    CustomerID int,
+    WishlistName nvarchar(100),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE WishlistItems (
+    WishlistItemID int PRIMARY KEY,
+    WishlistID int,
+    ProductID int,
+    AddedDate datetime,
+    FOREIGN KEY (WishlistID) REFERENCES Wishlists(WishlistID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE ShoppingCart (
+    CartID int PRIMARY KEY,
+    CustomerID int,
+    CreatedDate datetime,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE ShoppingCartItems (
+    CartItemID int PRIMARY KEY,
+    CartID int,
+    ProductID int,
+    Quantity int,
+    AddedDate datetime,
+    FOREIGN KEY (CartID) REFERENCES ShoppingCart(CartID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+[Tuesday 10:32 AM] Pravin Chaubey
+CREATE TABLE Customers (
+    CustomerID int PRIMARY KEY,
+    FirstName nvarchar(50),
+    LastName nvarchar(50),
+    Email nvarchar(100),
+    Phone nvarchar(20),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20)
+);
+ 
+CREATE TABLE Orders (
+    OrderID int PRIMARY KEY,
+    CustomerID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Products (
+    ProductID int PRIMARY KEY,
+    ProductName nvarchar(100),
+    SupplierID int,
+    CategoryID int,
+    QuantityPerUnit nvarchar(50),
+    UnitPrice decimal(10, 2),
+    UnitsInStock int,
+    UnitsOnOrder int,
+    ReorderLevel int,
+    Discontinued bit
+);
+ 
+CREATE TABLE Suppliers (
+    SupplierID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    ContactName nvarchar(50),
+    ContactTitle nvarchar(50),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    Phone nvarchar(20),
+    Fax nvarchar(20),
+    HomePage nvarchar(200)
+);
+ 
+CREATE TABLE Categories (
+    CategoryID int PRIMARY KEY,
+    CategoryName nvarchar(50),
+    Description nvarchar(500)
+);
+ 
+CREATE TABLE OrderDetails (
+    OrderDetailID int PRIMARY KEY,
+    OrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    Discount decimal(5, 2),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Employees (
+    EmployeeID int PRIMARY KEY,
+    LastName nvarchar(50),
+    FirstName nvarchar(50),
+    Title nvarchar(50),
+    TitleOfCourtesy nvarchar(50),
+    BirthDate datetime,
+    HireDate datetime,
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20),
+    HomePhone nvarchar(20),
+    Notes nvarchar(1000)
+);
+ 
+CREATE TABLE Shippers (
+    ShipperID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    Phone nvarchar(20)
+);
+ 
+CREATE TABLE CustomerDemographics (
+    CustomerTypeID int PRIMARY KEY,
+    CustomerDesc nvarchar(500)
+);
+ 
+CREATE TABLE Region (
+    RegionID int PRIMARY KEY,
+    RegionDescription nvarchar(50)
+);
+ 
+CREATE TABLE Territories (
+    TerritoryID int PRIMARY KEY,
+    TerritoryDescription nvarchar(50),
+    RegionID int,
+    FOREIGN KEY (RegionID) REFERENCES Region(RegionID)
+);
+ 
+CREATE TABLE EmployeeTerritories (
+    EmployeeID int,
+    TerritoryID int,
+    PRIMARY KEY (EmployeeID, TerritoryID),
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID),
+    FOREIGN KEY (TerritoryID) REFERENCES Territories(TerritoryID)
+);
+ 
+CREATE TABLE Inventory (
+    InventoryID int PRIMARY KEY,
+    ProductID int,
+    Quantity int,
+    Location nvarchar(100),
+    LastUpdated datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE PurchaseOrders (
+    PurchaseOrderID int PRIMARY KEY,
+    SupplierID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
+);
+ 
+CREATE TABLE PurchaseOrderDetails (
+    PurchaseOrderDetailID int PRIMARY KEY,
+    PurchaseOrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    FOREIGN KEY (PurchaseOrderID) REFERENCES PurchaseOrders(PurchaseOrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Reviews (
+    ReviewID int PRIMARY KEY,
+    ProductID int,
+    CustomerID int,
+    Rating int,
+    ReviewText nvarchar(1000),
+    ReviewDate datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Wishlists (
+    WishlistID int PRIMARY KEY,
+    CustomerID int,
+    WishlistName nvarchar(100),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE WishlistItems (
+    WishlistItemID int PRIMARY KEY,
+    WishlistID int,
+    ProductID int,
+    AddedDate datetime,
+    FOREIGN KEY (WishlistID) REFERENCES Wishlists(WishlistID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE ShoppingCart (
+    CartID int PRIMARY KEY,
+    CustomerID int,
+    CreatedDate datetime,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE ShoppingCartItems (
+    CartItemID int PRIMARY KEY,
+    CartID int,
+    ProductID int,
+    Quantity int,
+    AddedDate datetime,
+    FOREIGN KEY (CartID) REFERENCES ShoppingCart(CartID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+CREATE TABLE Customers (
+    CustomerID int PRIMARY KEY,
+    FirstName nvarchar(50),
+    LastName nvarchar(50),
+    Email nvarchar(100),
+    Phone nvarchar(20),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20)
+);
+ 
+CREATE TABLE Orders (
+    OrderID int PRIMARY KEY,
+    CustomerID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Products (
+    ProductID int PRIMARY KEY,
+    ProductName nvarchar(100),
+    SupplierID int,
+    CategoryID int,
+    QuantityPerUnit nvarchar(50),
+    UnitPrice decimal(10, 2),
+    UnitsInStock int,
+    UnitsOnOrder int,
+    ReorderLevel int,
+    Discontinued bit
+);
+ 
+CREATE TABLE Suppliers (
+    SupplierID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    ContactName nvarchar(50),
+    ContactTitle nvarchar(50),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    Phone nvarchar(20),
+    Fax nvarchar(20),
+    HomePage nvarchar(200)
+);
+ 
+CREATE TABLE Categories (
+    CategoryID int PRIMARY KEY,
+    CategoryName nvarchar(50),
+    Description nvarchar(500)
+);
+ 
+CREATE TABLE OrderDetails (
+    OrderDetailID int PRIMARY KEY,
+    OrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    Discount decimal(5, 2),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Employees (
+    EmployeeID int PRIMARY KEY,
+    LastName nvarchar(50),
+    FirstName nvarchar(50),
+    Title nvarchar(50),
+    TitleOfCourtesy nvarchar(50),
+    BirthDate datetime,
+    HireDate datetime,
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20),
+    HomePhone nvarchar(20),
+    Notes nvarchar(1000)
+);
+ 
+CREATE TABLE Shippers (
+    ShipperID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    Phone nvarchar(20)
+);
+ 
+CREATE TABLE CustomerDemographics (
+    CustomerTypeID int PRIMARY KEY,
+    CustomerDesc nvarchar(500)
+);
+ 
+CREATE TABLE Region (
+    RegionID int PRIMARY KEY,
+    RegionDescription nvarchar(50)
+);
+ 
+CREATE TABLE Territories (
+    TerritoryID int PRIMARY KEY,
+    TerritoryDescription nvarchar(50),
+    RegionID int,
+    FOREIGN KEY (RegionID) REFERENCES Region(RegionID)
+);
+ 
+CREATE TABLE EmployeeTerritories (
+    EmployeeID int,
+    TerritoryID int,
+    PRIMARY KEY (EmployeeID, TerritoryID),
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID),
+    FOREIGN KEY (TerritoryID) REFERENCES Territories(TerritoryID)
+);
+ 
+CREATE TABLE Inventory (
+    InventoryID int PRIMARY KEY,
+    ProductID int,
+    Quantity int,
+    Location nvarchar(100),
+    LastUpdated datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE PurchaseOrders (
+    PurchaseOrderID int PRIMARY KEY,
+    SupplierID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
+);
+ 
+CREATE TABLE PurchaseOrderDetails (
+    PurchaseOrderDetailID int PRIMARY KEY,
+    PurchaseOrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    FOREIGN KEY (PurchaseOrderID) REFERENCES PurchaseOrders(PurchaseOrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Reviews (
+    ReviewID int PRIMARY KEY,
+    ProductID int,
+    CustomerID int,
+    Rating int,
+    ReviewText nvarchar(1000),
+    ReviewDate datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Wishlists (
+    WishlistID int PRIMARY KEY,
+    CustomerID int,
+    WishlistName nvarchar(100),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE WishlistItems (
+    WishlistItemID int PRIMARY KEY,
+    WishlistID int,
+    ProductID int,
+    AddedDate datetime,
+    FOREIGN KEY (WishlistID) REFERENCES Wishlists(WishlistID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE ShoppingCart (
+    CartID int PRIMARY KEY,
+    CustomerID int,
+    CreatedDate datetime,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE ShoppingCartItems (
+    CartItemID int PRIMARY KEY,
+    CartID int,
+    ProductID int,
+    Quantity int,
+    AddedDate datetime,
+    FOREIGN KEY (CartID) REFERENCES ShoppingCart(CartID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+[Tuesday 10:32 AM] Pravin Chaubey
+CREATE TABLE Customers (
+    CustomerID int PRIMARY KEY,
+    FirstName nvarchar(50),
+    LastName nvarchar(50),
+    Email nvarchar(100),
+    Phone nvarchar(20),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20)
+);
+ 
+CREATE TABLE Orders (
+    OrderID int PRIMARY KEY,
+    CustomerID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Products (
+    ProductID int PRIMARY KEY,
+    ProductName nvarchar(100),
+    SupplierID int,
+    CategoryID int,
+    QuantityPerUnit nvarchar(50),
+    UnitPrice decimal(10, 2),
+    UnitsInStock int,
+    UnitsOnOrder int,
+    ReorderLevel int,
+    Discontinued bit
+);
+ 
+CREATE TABLE Suppliers (
+    SupplierID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    ContactName nvarchar(50),
+    ContactTitle nvarchar(50),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    Phone nvarchar(20),
+    Fax nvarchar(20),
+    HomePage nvarchar(200)
+);
+ 
+CREATE TABLE Categories (
+    CategoryID int PRIMARY KEY,
+    CategoryName nvarchar(50),
+    Description nvarchar(500)
+);
+ 
+CREATE TABLE OrderDetails (
+    OrderDetailID int PRIMARY KEY,
+    OrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    Discount decimal(5, 2),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Employees (
+    EmployeeID int PRIMARY KEY,
+    LastName nvarchar(50),
+    FirstName nvarchar(50),
+    Title nvarchar(50),
+    TitleOfCourtesy nvarchar(50),
+    BirthDate datetime,
+    HireDate datetime,
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20),
+    HomePhone nvarchar(20),
+    Notes nvarchar(1000)
+);
+ 
+CREATE TABLE Shippers (
+    ShipperID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    Phone nvarchar(20)
+);
+ 
+CREATE TABLE CustomerDemographics (
+    CustomerTypeID int PRIMARY KEY,
+    CustomerDesc nvarchar(500)
+);
+ 
+CREATE TABLE Region (
+    RegionID int PRIMARY KEY,
+    RegionDescription nvarchar(50)
+);
+ 
+CREATE TABLE Territories (
+    TerritoryID int PRIMARY KEY,
+    TerritoryDescription nvarchar(50),
+    RegionID int,
+    FOREIGN KEY (RegionID) REFERENCES Region(RegionID)
+);
+ 
+CREATE TABLE EmployeeTerritories (
+    EmployeeID int,
+    TerritoryID int,
+    PRIMARY KEY (EmployeeID, TerritoryID),
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID),
+    FOREIGN KEY (TerritoryID) REFERENCES Territories(TerritoryID)
+);
+ 
+CREATE TABLE Inventory (
+    InventoryID int PRIMARY KEY,
+    ProductID int,
+    Quantity int,
+    Location nvarchar(100),
+    LastUpdated datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE PurchaseOrders (
+    PurchaseOrderID int PRIMARY KEY,
+    SupplierID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
+);
+ 
+CREATE TABLE PurchaseOrderDetails (
+    PurchaseOrderDetailID int PRIMARY KEY,
+    PurchaseOrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    FOREIGN KEY (PurchaseOrderID) REFERENCES PurchaseOrders(PurchaseOrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Reviews (
+    ReviewID int PRIMARY KEY,
+    ProductID int,
+    CustomerID int,
+    Rating int,
+    ReviewText nvarchar(1000),
+    ReviewDate datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Wishlists (
+    WishlistID int PRIMARY KEY,
+    CustomerID int,
+    WishlistName nvarchar(100),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE WishlistItems (
+    WishlistItemID int PRIMARY KEY,
+    WishlistID int,
+    ProductID int,
+    AddedDate datetime,
+    FOREIGN KEY (WishlistID) REFERENCES Wishlists(WishlistID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE ShoppingCart (
+    CartID int PRIMARY KEY,
+    CustomerID int,
+    CreatedDate datetime,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE ShoppingCartItems (
+    CartItemID int PRIMARY KEY,
+    CartID int,
+    ProductID int,
+    Quantity int,
+    AddedDate datetime,
+    FOREIGN KEY (CartID) REFERENCES ShoppingCart(CartID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+[Tuesday 10:32 AM] Pravin Chaubey
+CREATE TABLE Customers (
+    CustomerID int PRIMARY KEY,
+    FirstName nvarchar(50),
+    LastName nvarchar(50),
+    Email nvarchar(100),
+    Phone nvarchar(20),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20)
+);
+ 
+CREATE TABLE Orders (
+    OrderID int PRIMARY KEY,
+    CustomerID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Products (
+    ProductID int PRIMARY KEY,
+    ProductName nvarchar(100),
+    SupplierID int,
+    CategoryID int,
+    QuantityPerUnit nvarchar(50),
+    UnitPrice decimal(10, 2),
+    UnitsInStock int,
+    UnitsOnOrder int,
+    ReorderLevel int,
+    Discontinued bit
+);
+ 
+CREATE TABLE Suppliers (
+    SupplierID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    ContactName nvarchar(50),
+    ContactTitle nvarchar(50),
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    Phone nvarchar(20),
+    Fax nvarchar(20),
+    HomePage nvarchar(200)
+);
+ 
+CREATE TABLE Categories (
+    CategoryID int PRIMARY KEY,
+    CategoryName nvarchar(50),
+    Description nvarchar(500)
+);
+ 
+CREATE TABLE OrderDetails (
+    OrderDetailID int PRIMARY KEY,
+    OrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    Discount decimal(5, 2),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Employees (
+    EmployeeID int PRIMARY KEY,
+    LastName nvarchar(50),
+    FirstName nvarchar(50),
+    Title nvarchar(50),
+    TitleOfCourtesy nvarchar(50),
+    BirthDate datetime,
+    HireDate datetime,
+    Address nvarchar(100),
+    City nvarchar(50),
+    Country nvarchar(50),
+    PostalCode nvarchar(20),
+    HomePhone nvarchar(20),
+    Notes nvarchar(1000)
+);
+ 
+CREATE TABLE Shippers (
+    ShipperID int PRIMARY KEY,
+    CompanyName nvarchar(100),
+    Phone nvarchar(20)
+);
+ 
+CREATE TABLE CustomerDemographics (
+    CustomerTypeID int PRIMARY KEY,
+    CustomerDesc nvarchar(500)
+);
+ 
+CREATE TABLE Region (
+    RegionID int PRIMARY KEY,
+    RegionDescription nvarchar(50)
+);
+ 
+CREATE TABLE Territories (
+    TerritoryID int PRIMARY KEY,
+    TerritoryDescription nvarchar(50),
+    RegionID int,
+    FOREIGN KEY (RegionID) REFERENCES Region(RegionID)
+);
+ 
+CREATE TABLE EmployeeTerritories (
+    EmployeeID int,
+    TerritoryID int,
+    PRIMARY KEY (EmployeeID, TerritoryID),
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID),
+    FOREIGN KEY (TerritoryID) REFERENCES Territories(TerritoryID)
+);
+ 
+CREATE TABLE Inventory (
+    InventoryID int PRIMARY KEY,
+    ProductID int,
+    Quantity int,
+    Location nvarchar(100),
+    LastUpdated datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE PurchaseOrders (
+    PurchaseOrderID int PRIMARY KEY,
+    SupplierID int,
+    OrderDate datetime,
+    TotalAmount decimal(10, 2),
+    Status nvarchar(20),
+    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
+);
+ 
+CREATE TABLE PurchaseOrderDetails (
+    PurchaseOrderDetailID int PRIMARY KEY,
+    PurchaseOrderID int,
+    ProductID int,
+    Quantity int,
+    UnitPrice decimal(10, 2),
+    FOREIGN KEY (PurchaseOrderID) REFERENCES PurchaseOrders(PurchaseOrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE Reviews (
+    ReviewID int PRIMARY KEY,
+    ProductID int,
+    CustomerID int,
+    Rating int,
+    ReviewText nvarchar(1000),
+    ReviewDate datetime,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE Wishlists (
+    WishlistID int PRIMARY KEY,
+    CustomerID int,
+    WishlistName nvarchar(100),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE WishlistItems (
+    WishlistItemID int PRIMARY KEY,
+    WishlistID int,
+    ProductID int,
+    AddedDate datetime,
+    FOREIGN KEY (WishlistID) REFERENCES Wishlists(WishlistID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+ 
+CREATE TABLE ShoppingCart (
+    CartID int PRIMARY KEY,
+    CustomerID int,
+    CreatedDate datetime,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+ 
+CREATE TABLE ShoppingCartItems (
+    CartItemID int PRIMARY KEY,
+    CartID int,
+    ProductID int,
+    Quantity int,
+    AddedDate datetime,
+    FOREIGN KEY (CartID) REFERENCES ShoppingCart(CartID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
